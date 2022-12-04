@@ -131,7 +131,7 @@ begin
         wait;
     end process LOAD;
 
-    UUT: filtAccel
+    UUT: entity work.filtAccel
         generic map (g_width=>16)
         port map (i_clk=>s_clk, i_rst=>s_rst,
                     i_data=>s_data, o_clkMic=>open,

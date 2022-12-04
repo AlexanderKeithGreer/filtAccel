@@ -39,6 +39,11 @@ package typeAxi is
         oRResp     : std_logic_vector(1 downto 0); --See above
     end record;
 
+    constant c_zeroWIntoS : t_WriteIntoSubord :=
+        ('0', x"0000_0000", b"000", '0', x"0000_0000", b"0000",'0');
+    constant c_zeroRIntoS : t_ReadIntoSubord :=
+        ('0', x"0000_0000", b"000", '0');
+
 end package;
 
 package body typeAxi is

@@ -26,30 +26,15 @@ library ieee;
 use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 
+use work.typeAxi.all;
+
 use std.textio.all;
 
-entity filtAccel_tb is
-end filtAccel_tb;
+entity filtAccel_inClk_tb is
+end filtAccel_inClk_tb;
 
 
-architecture tb of filtAccel_tb is
-	
-	component filtAccel is
-		generic 	( 	g_width 	: integer:=16 );
-		port	 	( 	i_clk		: in	std_logic;
-						i_rst		: in 	std_logic;
-						
-						i_data	: in 	std_logic;
-						o_clkMic : out std_logic;
-
-						i_WIntoS  : in    t_WriteIntoSubord;
-						o_WFromS  : out   t_WriteFromSubord;
-
-						i_RIntoS  : in    t_ReadIntoSubord;
-						i_RFromS  : out   t_ReadFromSubord;
-						
-						o_debug  : out	std_logic);	
-	end component;
+architecture tb of filtAccel_inClk_tb is
 	
 	constant c_width 	: integer:=16;
 	constant c_tick	    : time := 5ns;
@@ -60,7 +45,7 @@ architecture tb of filtAccel_tb is
 	
 	signal 	s_data		: std_logic := '0';
 	signal 	s_clkMic	: std_logic;
-	signal 	s_debugClk	: std_logic;
+	signal 	s_debug		: std_logic_vector(31 downto 0);
 	
 begin
 	
@@ -95,11 +80,12 @@ begin
 		wait;
 	end process LOAD;
 	
-	
-	UUT: filtAccel 
-		generic map (g_width=>16)
-		port map (  i_clk=>s_clk, i_rst=>s_rst, 
-                    i_data=>s_data, 
-                    o_clkMic=>s_clkMic, o_debug=>s_debugClk);
+	UUT: entity work.filtAccel
+	generic map (g_width=>16)
+	port map (i_clk=>s_clk, i_rst=>s_rst,
+				i_data=>s_data, o_clkMic=>s_clkMic,
+				i_WIntoS=>c_zeroWIntoS, o_WFromS=>open,
+				i_RIntoS=>c_zeroRIntoS, o_RFromS=>open,
+				i_debug=>x"01", o_debug=>s_debug);
 	
 end tb;
