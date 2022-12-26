@@ -30,7 +30,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-use work.typeAxi.all;
+use work.typeAmba.all;
 
 entity filtAccel_axi_tb is
 end filtAccel_axi_tb;

@@ -27,7 +27,7 @@ use ieee.numeric_std.all;
 use ieee.std_logic_1164.all;
 use std.textio.all;
 
-use work.typeAxi.all;
+use work.typeAmba.all;
 
 entity filtAccel_fir_tb is
 end filtAccel_fir_tb;
@@ -39,7 +39,7 @@ architecture tb of filtAccel_fir_tb is
 
 	constant c_width 	: integer:=16;
 	constant c_tick	    : time := 1ns;
-	constant c_rate		: integer := 10;
+	constant c_rate		: integer := 12;
 
 	constant c_rateReg	: std_logic_vector:=std_logic_vector(to_unsigned(c_rate-2,32));
 	constant c_arrayWIntoS : t_arrayWIntoS := (
@@ -85,7 +85,7 @@ begin
 		--  from the micClk... which is in theory driven by the
 		--  clock! So wait...
 		v_clkMicL := s_clkMic;
-		while ( not (v_clkMicL = '0' and s_clkMic = '1')) loop
+		while ( not (v_clkMicL = '1' and s_clkMic = '0')) loop
 			v_clkMicL := s_clkMic;
 			s_clk <= '0';
 			wait for c_tick;
